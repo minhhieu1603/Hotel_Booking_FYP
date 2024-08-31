@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MH Hotel - ABOUT</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <!-- Links Design -->
     <?php require('inc/links.php'); ?>
+    <title><?php echo $settings_r['site_title'] ?> - ABOUT</title>
     <style>
       .box{
         border-top-color: var(--teal) !important;

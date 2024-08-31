@@ -7,6 +7,7 @@ define('ABOUT_IMG_PATH', SITE_URL.'images/about/');
 define('CAROUSEL_IMG_PATH', SITE_URL.'images/carousel/');
 define('FACILITIES_IMG_PATH', SITE_URL.'images/facilities/');
 define('ROOMS_IMG_PATH', SITE_URL.'images/rooms/');
+define('USERS_IMG_PATH', SITE_URL.'images/users/');
 
 //backend upload process needs this data
 
@@ -20,6 +21,8 @@ define('USERS_FOLDER','users/');
 //sendgrid api key
 $env = parse_ini_file('../.env');
 define('SENDGRID_API_KEY', $env['SENDGRID_API_KEY']);
+define('SENDGRID_EMAIL', "ndmhieu.it@gmail.com");
+define('SENDGRID_NAME', "MH Hotel");
 
 
 

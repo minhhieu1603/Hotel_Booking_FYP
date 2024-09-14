@@ -43,6 +43,7 @@ if(isset($_POST['check_availability']))
 
         $count_days = date_diff($checkin_date,$checkout_date)->days;
         $payment = $_SESSION['room']['price'] * $count_days;
+        //$deposit = $payment * 0.5;
 
         $_SESSION['room']['payment'] = $payment;
         $_SESSION['room']['available'] = true;

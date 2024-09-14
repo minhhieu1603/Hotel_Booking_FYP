@@ -1,57 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <!-- Links Design -->
-    <?php require('inc/links.php'); ?>
-    <title><?php echo $settings_r['site_title'] ?> - CONFIRM BOOKING</title>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Links Design -->
+  <?php require('inc/links.php'); ?>
+  <title><?php echo $settings_r['site_title'] ?> - CONFIRM BOOKING</title>
 
 </head>
-  <body class="bg-light">
-   
+
+<body class="bg-light">
+
   <!-- Header Design -->
-  <?php require ('inc/header.php'); ?>
+  <?php require('inc/header.php'); ?>
 
   <?php
 
-    /*
+  /*
       Check room id from url is present or not
       Shutdown mode is active or not
       User is logged in or not
     */
 
-    if(!isset($_GET['id']) || $settings_r['shutdown']==true){
-      redirect('rooms.php');
-    }
-    else if(!(isset($_SESSION['login']) && $_SESSION['login']==true)){
-      redirect('rooms.php');
-    }
+  if (!isset($_GET['id']) || $settings_r['shutdown'] == true) {
+    redirect('rooms.php');
+  } else if (!(isset($_SESSION['login']) && $_SESSION['login'] == true)) {
+    redirect('rooms.php');
+  }
 
-    // filter and get room and user data
+  // filter and get room and user data
 
-    $data = filteration($_GET);
+  $data = filteration($_GET);
 
-    $room_res = select("SELECT * FROM `rooms` WHERE `id`=? AND `status`=? AND `removed`=?",[$data['id'],1,0],'iii');
+  $room_res = select("SELECT * FROM `rooms` WHERE `id`=? AND `status`=? AND `removed`=?", [$data['id'], 1, 0], 'iii');
 
-    if(mysqli_num_rows($room_res)==0){
-      redirect('rooms.php');
-    }
+  if (mysqli_num_rows($room_res) == 0) {
+    redirect('rooms.php');
+  }
 
-    $room_data = mysqli_fetch_assoc($room_res);
+  $room_data = mysqli_fetch_assoc($room_res);
 
-    $_SESSION['room'] = [
-      "id" => $room_data['id'],
-      "name" => $room_data['name'],
-      "price" => $room_data['price'],
-      "payment" => null,
-      "available" => false,
-    ];
+  $_SESSION['room'] = [
+    "id" => $room_data['id'],
+    "name" => $room_data['name'],
+    "price" => $room_data['price'],
+    "payment" => null,
+    "available" => false,
+  ];
 
-    $user_res = select("SELECT * FROM `user_cred` WHERE `id` =? LIMIT 1", [$_SESSION['uId']], "i");
-    $user_data = mysqli_fetch_assoc($user_res);
+  $user_res = select("SELECT * FROM `user_cred` WHERE `id` =? LIMIT 1", [$_SESSION['uId']], "i");
+  $user_data = mysqli_fetch_assoc($user_res);
   ?>
 
 
@@ -71,23 +72,23 @@
       </div>
 
       <div class="col-lg-7 col-md-12 px-4">
-        
+
         <?php
-          $room_thumb = ROOMS_IMG_PATH."thumbnail.jpg";
-          $thumb_q = mysqli_query($con,"SELECT * FROM `room_images` 
+        $room_thumb = ROOMS_IMG_PATH . "thumbnail.jpg";
+        $thumb_q = mysqli_query($con, "SELECT * FROM `room_images` 
           WHERE `room_id`='$room_data[id]' 
           AND `thumb`='1'");
 
-          if(mysqli_num_rows($thumb_q)>0){
-            $thumb_res = mysqli_fetch_assoc($thumb_q);
-            $room_thumb = ROOMS_IMG_PATH.$thumb_res['image'];
-          }
+        if (mysqli_num_rows($thumb_q) > 0) {
+          $thumb_res = mysqli_fetch_assoc($thumb_q);
+          $room_thumb = ROOMS_IMG_PATH . $thumb_res['image'];
+        }
 
-          echo<<<data
+        echo <<<data
             <div class="card p-3 shadow-sm rounded">
               <img src="$room_thumb" class="img-fluid rounded mb-3">
               <h5>$room_data[name]</h5>
-              <h6>$$room_data[price] / Night</h6>
+              <h6>$room_data[price]đ / Night</h6>
             </div>
           data;
         ?>
@@ -97,7 +98,7 @@
       <div class="col-lg-5 col-md-12 px-4">
         <div class="card mb-4 border-0 shadow-sm rounded-3">
           <div class="card-body">
-            <form action="#" id="booking_form">
+            <form action="pay_now.php" id="booking_form" method="POST">
               <h6 class="mb-3">BOOKING DETAILS</h6>
               <div class="row">
                 <div class="col-md-6 mb-3">
@@ -127,16 +128,17 @@
                   </div>
 
                   <h6 class="mb-3 text-danger" id="pay_info">Provide check-in & check-out date !</h6>
-                  
-                  <button name="pay_now" class="btn w-100 text-white custom-bg shadow-none mb-1" disabled>Pay Now</button>
+                  <input type="hidden" name="redirect" value="true">
+                  <div class="d-flex flex-row justify-content-between">
+                    <!-- <button name="deposit_now" class="btn  text-white custom-bg shadow-none mb-1" disabled>Deposit Now</button> -->
+                    <button name="pay_now" class="btn w-100 text-white custom-bg shadow-none mb-1" disabled>Pay Now</button>
+                  </div>
                 </div>
               </div>
             </form>
           </div>
         </div>
       </div>
-
-      
 
     </div>
   </div>
@@ -145,53 +147,48 @@
   <!-- Footer Design -->
   <?php require('inc/footer.php'); ?>
   <script>
-
     let booking_form = document.getElementById('booking_form');
     let info_loader = document.getElementById('info_loader');
     let pay_info = document.getElementById('pay_info');
 
-    function check_availability() 
-    {
+    function check_availability() {
       let checkin_val = booking_form.elements['checkin'].value;
       let checkout_val = booking_form.elements['checkout'].value;
 
-      booking_form.elements['pay_now'].setAttribute('disabled',true);
-
-      if(checkin_val!='' && checkout_val!='')
-      {
+      booking_form.elements['pay_now'].setAttribute('disabled', true);
+      //booking_form.elements['deposit_now'].setAttribute('disabled', true);
+      if (checkin_val != '' && checkout_val != '') {
         pay_info.classList.add('d-none');
-        pay_info.classList.replace('text-dark','text-danger');
+        pay_info.classList.replace('text-dark', 'text-danger');
         info_loader.classList.remove('d-none');
 
         let data = new FormData();
 
-        data.append('check_availability','');
-        data.append('check_in',checkin_val);
-        data.append('check_out',checkout_val);
+        data.append('check_availability', '');
+        data.append('check_in', checkin_val);
+        data.append('check_out', checkout_val);
 
         let xhr = new XMLHttpRequest();
-        xhr.open("POST", "ajax/confirm_booking.php",true);
+        xhr.open("POST", "ajax/confirm_booking.php", true);
 
-        xhr.onload = function()
-        {
+        xhr.onload = function() {
           let data = JSON.parse(this.responseText);
 
-          if(data.status == 'check_in_out_equal'){
+          if (data.status == 'check_in_out_equal') {
             pay_info.innerText = "You cannot check-out on the same day!";
-          }
-          else if(data.status == 'check_out_earlier'){
+          } else if (data.status == 'check_out_earlier') {
             pay_info.innerText = "Check-out date is earlier than check-in date!";
-          }
-          else if(data.status == 'check_in_earlier'){
+          } else if (data.status == 'check_in_earlier') {
             pay_info.innerText = "Check-in date is earlier than today's date!";
-          }
-          else if(data.status == 'unavailable'){
+          } else if (data.status == 'unavailable') {
             pay_info.innerText = "Room not available for this check-in date!";
-          }
-          else{
-            pay_info.innerHTML = "No. of Days: "+data.days+"<br>Total Amount to Pay: $"+data.payment;
-            pay_info.classList.replace('text-danger','text-dark');
+          } else {
+            pay_info.innerHTML = "No. of Days: " + data.days 
+              + "<br>Total Amount to Pay: " + data.payment + "đ"
+            //  + "<br>Deposit Amount: " + data.deposit + "đ";
+            pay_info.classList.replace('text-danger', 'text-dark');
             booking_form.elements['pay_now'].removeAttribute('disabled');
+            //booking_form.elements['deposit_now'].removeAttribute('disabled');
           }
 
           pay_info.classList.remove('d-none');
@@ -201,10 +198,10 @@
         xhr.send(data);
       }
     }
-  
   </script>
 
-  
 
-  </body>
+
+</body>
+
 </html>

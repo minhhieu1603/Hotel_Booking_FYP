@@ -154,10 +154,11 @@
         echo <<<data
           <div class="col-lg-4 col-md-6 my-3">
             <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
+            <a href="room_details.php?id=$room_data[id]" class="text-decoration-none text-dark">
               <img src="$room_thumb" class="card-img-top">
               <div class="card-body">
                 <h5>$room_data[name]</h5>
-                <h6 class="mb-4">$$room_data[price] / Night</h6>
+                <h6 class="mb-4">$room_data[price]đ / Night</h6>
                 <div class="features mb-4">
                   <h6 class="mb-1">Features</h6>
                   $features_data
@@ -185,12 +186,14 @@
                     <i class="bi bi-star-fill text-warning"></i>
                   </span>
                 </div>
+                </a>
                 <div class="d-flex justify-content-evenly mb-2">
                   $book_btn
                   <a href="room_details.php?id=$room_data[id]" class="btn btn-sm btn-outline-dark shadow-none">More details</a>
                 </div>
               </div>
             </div>
+            </a>
           </div>
         data;
 

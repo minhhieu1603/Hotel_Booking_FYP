@@ -24,6 +24,10 @@ define('SENDGRID_API_KEY', $env['SENDGRID_API_KEY']);
 define('SENDGRID_EMAIL', "ndmhieu.it@gmail.com");
 define('SENDGRID_NAME', "MH Hotel");
 
+// Possible "booking status" values in db = pending, booked, payment failed, cancelled
+
+// to configure vnpay gateway check file 'project folder / inc / vnpay / config.php'
+
 
 
 function adminLogin()

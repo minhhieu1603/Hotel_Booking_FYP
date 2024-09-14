@@ -95,7 +95,7 @@
             <?php
 
                 echo<<<price
-                  <h4>$$room_data[price] / Night</h4>
+                  <h4>$room_data[price]đ / Night</h4>
                 price;
 
                 echo<<<rating

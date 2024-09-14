@@ -38,61 +38,61 @@
       $booking_res = select($booking_q, [$frm_data['order'], $_SESSION['uId'], 'pending'], 'sis');
       //$booking_fetch = mysqli_fetch_assoc($booking_res);
 
-      if(mysqli_num_rows($booking_res)==0){
-        redirect('index.php');
-      }
+      // if(mysqli_num_rows($booking_res)==0){
+      //   redirect('index.php');
+      // }
 
       $booking_fetch = mysqli_fetch_assoc($booking_res);
 
-      if ($booking_fetch['trans_status'] == '00') {
-          echo <<<data
-              <div class="col-12 px-4">
-                <p class="fw-bold alert alert-success">
-                  <i class="bi bi-check-circle-fill"></i>
-                  Payment done! Booking successful.
-                  <br><br>
-                  <a href='bookings.php'>Go to Bookings</a>
-                </p>
-              </div>
-            data;
-      }
-      else{
-        echo <<<data
-              <div class="col-12 px-4">
-                <p class="fw-bold alert alert-danger">
-                  <i class="bi bi-exclamation-triangle-fill"></i>
-                  Payment failed!
-                  <br><br>
-                  <a href='bookings.php'>Go to Bookings</a>
-                </p>
-              </div>
-            data;
-      }
-
       // if ($booking_fetch['trans_status'] == '00') {
-      //   echo <<<data
-      //       <div class="col-12 px-4">
-      //         <p class="fw-bold alert alert-success">
-      //           <i class="bi bi-check-circle-fill"></i>
-      //           Payment done! Booking successful.
-      //           <br><br>
-      //           <a href='bookings.php'>Go to Bookings</a>
-      //         </p>
-      //       </div>
-      //     data;
+      //     echo <<<data
+      //         <div class="col-12 px-4">
+      //           <p class="fw-bold alert alert-success">
+      //             <i class="bi bi-check-circle-fill"></i>
+      //             Payment done! Booking successful.
+      //             <br><br>
+      //             <a href='bookings.php'>Go to Bookings</a>
+      //           </p>
+      //         </div>
+      //       data;
       // }
-      // if (mysqli_num_rows($booking_res) == 0 || $booking_fetch['trans_status'] != '00') {
+      // else{
       //   echo <<<data
-      //     <div class="col-12 px-4">
-      //       <p class="fw-bold alert alert-danger">
-      //         <i class="bi bi-exclamation-triangle-fill"></i>
-      //         Payment failed!
-      //         <br><br>
-      //         <a href='bookings.php'>Go to Bookings</a>
-      //       </p>
-      //     </div>
-      //   data;
+      //         <div class="col-12 px-4">
+      //           <p class="fw-bold alert alert-danger">
+      //             <i class="bi bi-exclamation-triangle-fill"></i>
+      //             Payment failed!
+      //             <br><br>
+      //             <a href='bookings.php'>Go to Bookings</a>
+      //           </p>
+      //         </div>
+      //       data;
       // }
+
+      if ($booking_fetch['trans_status'] == '00') {
+        echo <<<data
+            <div class="col-12 px-4">
+              <p class="fw-bold alert alert-success">
+                <i class="bi bi-check-circle-fill"></i>
+                Payment done! Booking successful.
+                <br><br>
+                <a href='bookings.php'>Go to Bookings</a>
+              </p>
+            </div>
+          data;
+      }
+      if (mysqli_num_rows($booking_res) == 0 || $booking_fetch['trans_status'] != '00') {
+        echo <<<data
+          <div class="col-12 px-4">
+            <p class="fw-bold alert alert-danger">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              Payment failed!
+              <br><br>
+              <a href='bookings.php'>Go to Bookings</a>
+            </p>
+          </div>
+        data;
+      }
 
       ?>
 

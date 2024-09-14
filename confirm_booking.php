@@ -130,8 +130,8 @@
                   <h6 class="mb-3 text-danger" id="pay_info">Provide check-in & check-out date !</h6>
                   <input type="hidden" name="redirect" value="true">
                   <div class="d-flex flex-row justify-content-between">
-                    <!-- <button name="deposit_now" class="btn  text-white custom-bg shadow-none mb-1" disabled>Deposit Now</button> -->
-                    <button name="pay_now" class="btn w-100 text-white custom-bg shadow-none mb-1" disabled>Pay Now</button>
+                    <button name="deposit_now" class="btn custom-bg text-white  shadow-none mb-1" disabled>Deposit Now</button>
+                    <button name="pay_now" class="btn w-50 btn-danger text-white shadow-none mb-1" disabled>Pay Now</button>
                   </div>
                 </div>
               </div>
@@ -156,7 +156,7 @@
       let checkout_val = booking_form.elements['checkout'].value;
 
       booking_form.elements['pay_now'].setAttribute('disabled', true);
-      //booking_form.elements['deposit_now'].setAttribute('disabled', true);
+      booking_form.elements['deposit_now'].setAttribute('disabled', true);
       if (checkin_val != '' && checkout_val != '') {
         pay_info.classList.add('d-none');
         pay_info.classList.replace('text-dark', 'text-danger');
@@ -185,10 +185,10 @@
           } else {
             pay_info.innerHTML = "No. of Days: " + data.days 
               + "<br>Total Amount to Pay: " + data.payment + "đ"
-            //  + "<br>Deposit Amount: " + data.deposit + "đ";
+             + "<br>Deposit Amount: " + data.deposit + "đ";
             pay_info.classList.replace('text-danger', 'text-dark');
             booking_form.elements['pay_now'].removeAttribute('disabled');
-            //booking_form.elements['deposit_now'].removeAttribute('disabled');
+            booking_form.elements['deposit_now'].removeAttribute('disabled');
           }
 
           pay_info.classList.remove('d-none');

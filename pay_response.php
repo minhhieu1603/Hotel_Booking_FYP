@@ -61,36 +61,36 @@ if ($secureHash == $vnp_SecureHash) {
     }
     if ($_GET['vnp_ResponseCode'] == '00') //GD thanh cong
     {
-        // $vnp_Amount=$_GET['vnp_Amount']/100;
-        // $upd_query = "
-        //     DELETE `booking_order` 
-        //     SET `booking_status`='booked', `trans_id`='$_GET[vnp_TxnRef]', `trans_status`='$_GET[vnp_ResponseCode]', `trans_resp_msg`='success' 
-        //     WHERE `booking_id`='$slct_fetch[booking_id]'; 
+        $vnp_Amount=$_GET['vnp_Amount']/100;
+        $upd_query = "
+            UPDATE `booking_order` 
+            SET `booking_status`='booked', `trans_id`='$_GET[vnp_TxnRef]', `trans_status`='$_GET[vnp_ResponseCode]', `trans_resp_msg`='success' 
+            WHERE `booking_id`='$slct_fetch[booking_id]'; 
 
-        //     UPDATE `booking_details` 
-        //     SET `paid`='$vnp_Amount' 
-        //     WHERE `booking_id`='$slct_fetch[booking_id]'
-        // ";
+            UPDATE `booking_details` 
+            SET `paid`='$vnp_Amount' 
+            WHERE `booking_id`='$slct_fetch[booking_id]'
+        ";
 
-        // mysqli_multi_query($con, $upd_query);
+        mysqli_multi_query($con, $upd_query);
 
-        $upd_query = "UPDATE `booking_order` SET `booking_status`='booked', `trans_id`='$_GET[vnp_TxnRef]', `trans_status`='$_GET[vnp_ResponseCode]', 
-            `trans_resp_msg`='success' 
-             WHERE `booking_id`='$slct_fetch[booking_id]'";
+        // $upd_query = "UPDATE `booking_order` SET `booking_status`='booked', `trans_id`='$_GET[vnp_TxnRef]', `trans_status`='$_GET[vnp_ResponseCode]', 
+        //     `trans_resp_msg`='success' 
+        //      WHERE `booking_id`='$slct_fetch[booking_id]'";
 
 
-        mysqli_query($con, $upd_query);
+        // mysqli_query($con, $upd_query);
 
     } else {
-        // $del_query1 = "DELETE FROM `booking_details` WHERE `booking_id`='$slct_fetch[booking_id]'";
-        // $del_query2 = "DELETE FROM `booking_order` WHERE `booking_id`='$slct_fetch[booking_id]'";
-        // mysqli_query($con, $del_query1);
-        // mysqli_query($con, $del_query2);
-        $upd_query = "UPDATE `booking_order` SET `booking_status`='payment failed', `trans_id`='$_GET[vnp_TxnRef]', `trans_status`='$_GET[vnp_ResponseCode]', 
-            `trans_resp_msg`='failed' 
-             WHERE `booking_id`='$slct_fetch[booking_id]'";
+        $del_query1 = "DELETE FROM `booking_details` WHERE `booking_id`='$slct_fetch[booking_id]'";
+        $del_query2 = "DELETE FROM `booking_order` WHERE `booking_id`='$slct_fetch[booking_id]'";
+        mysqli_query($con, $del_query1);
+        mysqli_query($con, $del_query2);
+        // $upd_query = "UPDATE `booking_order` SET `booking_status`='payment failed', `trans_id`='$_GET[vnp_TxnRef]', `trans_status`='$_GET[vnp_ResponseCode]', 
+        //     `trans_resp_msg`='failed' 
+        //      WHERE `booking_id`='$slct_fetch[booking_id]'";
 
-        mysqli_query($con, $upd_query);
+        // mysqli_query($con, $upd_query);
     }
     redirect('pay_status.php?order=' . $_GET['vnp_TxnRef']);
 } else {

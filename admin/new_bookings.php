@@ -28,7 +28,7 @@ adminLogin();
                     <div class="card-body">
 
                         <div class="text-end mb-4">
-                            <input type="text" oninput="search_user(this.value)" class="form-control shadow-none w-25 ms-auto" placeholder="Type to search...">
+                            <input type="text" oninput="get_bookings(this.value)" class="form-control shadow-none w-25 ms-auto" placeholder="Type to search...">
                         </div>
 
                         <div class="table-responsive">

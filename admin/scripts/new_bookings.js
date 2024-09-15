@@ -1,4 +1,4 @@
-function get_bookings()
+function get_bookings(search='')
 {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "ajax/new_bookings.php",true);
@@ -8,7 +8,7 @@ function get_bookings()
         document.getElementById('table-data').innerHTML = this.responseText;
     }
 
-    xhr.send('get_bookings');
+    xhr.send('get_bookings&search='+search);
 }
 
 let assign_room_form = document.getElementById('assign_room_form');

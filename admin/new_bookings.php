@@ -22,7 +22,7 @@ adminLogin();
     <div class="container-fluid" id="main-content">
         <div class="row">
             <div class="col-lg-10 ms-auto p-4 overflow-hidden">
-                <h3 class="mb-4">New Bookings</h3>
+                <h3 class="mb-4">NEW BOOKINGS</h3>
 
                 <div class="card border-0 shadow-sm mb-4">
                     <div class="card-body">
@@ -32,7 +32,7 @@ adminLogin();
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-hover border">
+                            <table class="table table-hover border" style="min-width: 1200px;">
                                 <thead>
                                     <tr class="bg-dark text-light">
                                         <th scope="col">#</th>

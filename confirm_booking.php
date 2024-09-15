@@ -130,7 +130,7 @@
                   <h6 class="mb-3 text-danger" id="pay_info">Provide check-in & check-out date !</h6>
                   <input type="hidden" name="redirect" value="true">
                   <div class="d-flex flex-row justify-content-between">
-                    <button name="deposit_now" class="btn custom-bg text-white  shadow-none mb-1" disabled>Deposit Now</button>
+                    <button name="deposit_now" class="btn text-white custom-bg shadow-none mb-1" disabled>Deposit Now</button>
                     <button name="pay_now" class="btn w-50 btn-danger text-white shadow-none mb-1" disabled>Pay Now</button>
                   </div>
                 </div>

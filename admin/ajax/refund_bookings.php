@@ -27,6 +27,8 @@ if (isset($_POST['get_bookings']))
         $checkin = date("d-m-Y", strtotime($data['check_in']));
         $checkout = date("d-m-Y", strtotime($data['check_out']));
 
+        $formatted_number = number_format($data['trans_amt'], 0, '.', ',');
+
         $table_data .= "
                 <tr>
                     <td>$i</td>
@@ -49,7 +51,7 @@ if (isset($_POST['get_bookings']))
                         <b>Date:</b> $date
                     </td>
                     <td>
-                        <b>$data[trans_amt]đ</b>
+                        <b>{$formatted_number}đ</b>
                     </td>
                     <td>
                         <button type='button' onclick='refund_booking($data[booking_id])' class='btn btn-success btn-sm fw-bold shadow-none'>

@@ -151,6 +151,8 @@
 
         //print room card
 
+        $formatted_number = number_format($room_data['price'], 0, '.', ',');
+
         echo <<<data
           <div class="col-lg-4 col-md-6 my-3">
             <div class="card border-0 shadow" style="max-width: 350px; margin: auto;">
@@ -158,7 +160,7 @@
               <img src="$room_thumb" class="card-img-top">
               <div class="card-body">
                 <h5>$room_data[name]</h5>
-                <h6 class="mb-4">$room_data[price]đ / Night</h6>
+                <h6 class="mb-4">{$formatted_number}đ / Night</h6>
                 <div class="features mb-4">
                   <h6 class="mb-1">Features</h6>
                   $features_data

@@ -72,6 +72,7 @@
             else{
                 $status = "<button onclick='toggle_status($row[id],1)' class='btn btn-warning btn-sm shadow-none'>inactive</button>";
             }
+            $formatted_number = number_format($row['price'], 0, '.', ',');
 
             $data.="
                 <tr class='align-middle'>
@@ -86,7 +87,7 @@
                             Children: $row[children]
                         </span>
                     </td>
-                    <td>$$row[price]</td>
+                    <td>{$formatted_number}đ</td>
                     <td>$row[quantity]</td>
                     <td>$status</td>
                     <td>

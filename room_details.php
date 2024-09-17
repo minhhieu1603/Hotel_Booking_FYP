@@ -94,8 +94,10 @@
           <div class="card-body">
             <?php
 
+                $formatted_number = number_format($room_data['price'], 0, '.', ',');
+
                 echo<<<price
-                  <h4>$room_data[price]đ / Night</h4>
+                  <h4>{$formatted_number}đ / Night</h4>
                 price;
 
                 echo<<<rating

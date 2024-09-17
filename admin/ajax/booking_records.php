@@ -8,7 +8,7 @@ if (isset($_POST['get_bookings']))
 {
     $frm_data = filteration($_POST);
 
-    $limit = 2;  //số lượng bản ghi được hiển thị trên mỗi trang
+    $limit = 10;  //số lượng bản ghi được hiển thị trên mỗi trang
     $page = $frm_data['page'];
     $start = ($page - 1) * $limit; //page 1: (1-1*10),10  page 2: (2-1*10),10  page 3: (3-1*10),10 , 30,10
 
@@ -50,6 +50,9 @@ if (isset($_POST['get_bookings']))
             $status_bg = 'bg-warning text-dark';
         }
 
+        $formatted_number1 = number_format($data['price'], 0, '.', ',');
+        $formatted_number2 = number_format($data['trans_amt'], 0, '.', ',');
+
         $table_data .= "
                 <tr>
                     <td>$i</td>
@@ -65,10 +68,10 @@ if (isset($_POST['get_bookings']))
                     <td>
                         <b>Room:</b> $data[room_name]
                         <br>
-                        <b>Price:</b> $data[price]đ
+                        <b>Price:</b> {$formatted_number1}đ
                     </td>
                     <td>
-                        <b>Amount:</b> $data[trans_amt]đ
+                        <b>Amount:</b> {$formatted_number2}đ
                         <br>
                         <b>Date:</b> $date
                     </td>
@@ -76,8 +79,8 @@ if (isset($_POST['get_bookings']))
                         <span class='badge $status_bg'>$data[booking_status]</span>
                     </td>
                     <td>
-                        <button type='button' onclick='cancel_booking($data[booking_id])' class='mt-2 btn btn-outline-danger btn-sm fw-bold shadow-none'>
-                            <i class='bi bi-trash'></i>
+                        <button type='button' onclick='download($data[booking_id])' class='btn btn-outline-success btn-sm fw-bold shadow-none'>
+                            <i class='bi bi-filetype-pdf'></i>
                         </button>
                     </td>
                 </tr>
@@ -125,34 +128,4 @@ if (isset($_POST['get_bookings']))
     echo $output;
 }
 
-
-
-
-
-
-if (isset($_POST['assign_room']))
-{
-    $frm_data = filteration($_POST);
-
-    $query = "UPDATE `booking_order` bo INNER JOIN `booking_details` bd
-        ON bo.booking_id = bd.booking_id
-        SET bo.arrival = ?, bd.room_no = ?
-        WHERE bo.booking_id = ?";
-    
-    $values = [1,$frm_data['room_no'],$frm_data['booking_id']];
-
-    $res = update($query,$values,'isi'); // it will update 2 rows so it will return 2
-
-    echo ($res==2) ? 1 : 0;  //1 = true; 2 = false
-}
-
-if (isset($_POST['cancel_booking'])) {
-    $frm_data = filteration($_POST);
-
-    $query = "UPDATE `booking_order` SET `booking_status`=?, `refund`=? WHERE `booking_id`=?";
-    $values = ['cancelled',0,$frm_data['booking_id']];
-    $res = update($query,$values,'sii');
-
-    echo $res;
-}
 

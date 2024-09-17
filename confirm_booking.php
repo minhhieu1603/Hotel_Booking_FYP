@@ -84,11 +84,13 @@
           $room_thumb = ROOMS_IMG_PATH . $thumb_res['image'];
         }
 
+        $formatted_number = number_format($room_data['price'], 0, '.', ',');
+
         echo <<<data
             <div class="card p-3 shadow-sm rounded">
               <img src="$room_thumb" class="img-fluid rounded mb-3">
               <h5>$room_data[name]</h5>
-              <h6>$room_data[price]đ / Night</h6>
+              <h6>{$formatted_number}đ / Night</h6>
             </div>
           data;
         ?>

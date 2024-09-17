@@ -27,6 +27,9 @@ if (isset($_POST['get_bookings']))
         $checkin = date("d-m-Y", strtotime($data['check_in']));
         $checkout = date("d-m-Y", strtotime($data['check_out']));
 
+        $formatted_number1 = number_format($data['price'], 0, '.', ',');
+        $formatted_number2 = number_format($data['trans_amt'], 0, '.', ',');
+
         $table_data .= "
                 <tr>
                     <td>$i</td>
@@ -42,14 +45,14 @@ if (isset($_POST['get_bookings']))
                     <td>
                         <b>Room:</b> $data[room_name]
                         <br>
-                        <b>Price:</b> $data[price]đ
+                        <b>Price:</b> {$formatted_number1}đ
                     </td>
                     <td>
                         <b>Check-in:</b> $checkin
                         <br>
                         <b>Check-out:</b> $checkout
                         <br>
-                        <b>Paid:</b> $data[trans_amt]đ
+                        <b>Paid:</b> {$formatted_number2}đ
                         <br>
                         <b>Date:</b> $date
                     </td>

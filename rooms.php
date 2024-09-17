@@ -128,6 +128,8 @@
 
             //print room card
 
+            $formatted_number = number_format($room_data['price'], 0, '.', ',');
+
             echo <<<data
               <div class="card mb-4 border-0 shadow">
                 <div class="row g-0 p-3 align-items-center">
@@ -155,7 +157,7 @@
                     </div>
                   </div>
                   <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
-                    <h6 class="mb-4">$room_data[price]đ / Night</h6>
+                    <h6 class="mb-4">{$formatted_number}đ / Night</h6>
                     $book_btn
                     <a href="room_details.php?id=$room_data[id]" class="btn btn-sm w-100 btn-outline-dark shadow-none">More details</a>
                   </div>

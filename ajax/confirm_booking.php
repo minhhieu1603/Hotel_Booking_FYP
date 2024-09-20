@@ -37,9 +37,25 @@ if(isset($_POST['check_availability']))
     }
     else{
         session_start();
-        $_SESSION['room'];
 
         // run query to check room is available or not
+        $tb_query = "SELECT COUNT(*) AS `total_bookings` FROM `booking_order` #Truy vấn để lấy tổng số lượt đặt phòng 
+            WHERE booking_status=? AND room_id=?
+            AND check_out > ? AND check_in < ?";
+
+        $values = ['booked',$_SESSION['room']['id'],$frm_data['check_in'],$frm_data['check_out']]; #Gán giá trị cho các tham số trong truy vấn
+
+        $tb_fetch = mysqli_fetch_assoc(select($tb_query,$values,'siss')); #Thực thi truy vấn và lấy tổng số phòng đã được đặt
+
+        $rq_result = select("SELECT `quantity` FROM `rooms` WHERE `id`=?",[$_SESSION['room']['id']],'i'); #Truy vấn để lấy số lượng phòng hiện có
+        $rq_fetch = mysqli_fetch_assoc($rq_result);
+
+        if(($rq_fetch['quantity']-$tb_fetch['total_bookings'])==0){  #Kiểm tra tính khả dụng của phòng
+            $status = 'unavailable';
+            $result = json_encode(['status'=>$status]);
+            echo $result;
+            exit;
+        }
 
         $count_days = date_diff($checkin_date,$checkout_date)->days;
         // $payment = $_SESSION['room']['price'] * $count_days;

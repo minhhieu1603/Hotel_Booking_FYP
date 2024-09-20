@@ -30,7 +30,7 @@
             echo<<<data
               <div class="btn-group">
                 <button type="button" class="btn btn-outline-dark shadow-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                  <img src="$path$_SESSION[uPic]" style="width: 25px; height: 25px;" class="me-1">
+                  <img src="$path$_SESSION[uPic]" style="width: 25px; height: 25px;" class="me-1 rounded-circle">
                   $_SESSION[uName]
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
@@ -71,11 +71,11 @@
       <div class="modal-body">
         <div class="mb-3">
           <label class="form-label">Email / Mobile</label>
-          <input type="text" name="email_mob" required class="form-control shadow-none">
+          <input type="text" placeholder="Enter Email / Mobile " name="email_mob" required class="form-control shadow-none">
         </div>
         <div class="mb-4">
           <label class="form-label">Password</label>
-          <input type="password" name="pass" required class="form-control shadow-none">
+          <input type="password" placeholder="Enter Password" name="pass" required class="form-control shadow-none">
         </div>
         <div class="d-flex align-items-center justify-content-between mb-2">
           <button type="submit" class="btn btn-dark shadow-none">LOGIN</button>

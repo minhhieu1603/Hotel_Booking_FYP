@@ -116,7 +116,7 @@
         <form id="review-form">
           <div class="modal-header">
             <h5 class="modal-title d-flex align-items-center">
-              <i class="bi bi-chat-square-heart-fill fs-3 me-2"></i> Rate & Review
+              <i class="bi bi-chat-square-text-fill fs-3 me-2"></i> Rate & Review
             </h5>
             <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>

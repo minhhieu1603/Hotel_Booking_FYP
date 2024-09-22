@@ -195,7 +195,7 @@
       e.preventDefault();
 
       let data = new FormData();
-      data.append('review_form', '');
+      data.append('review_form', ''); //cb du lieu gui len ajax
       data.append('rating', review_form.elements['rating'].value);
       data.append('review', review_form.elements['review'].value);
       data.append('booking_id', review_form.elements['booking_id'].value);

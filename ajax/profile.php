@@ -87,4 +87,6 @@ if (isset($_POST['pass_form'])) {
         echo 0;
     }
 }
+
+?>
  

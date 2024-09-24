@@ -128,4 +128,6 @@ if (isset($_POST['get_bookings']))
     echo $output;
 }
 
+?>
+
 

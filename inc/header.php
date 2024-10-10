@@ -24,13 +24,17 @@
       </ul>
       <div class="d-flex">
         <?php
-          if(isset($_SESSION['login']) && $_SESSION['login']==true)
-          {
-            $path = USERS_IMG_PATH;
-            echo<<<data
+        if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
+    
+            $path = USERS_IMG_PATH . 'IMG_user.png';
+            // $localImage=file_exists($path) ? $path : USERS_IMG_PATH . 'IMG_user.png';
+            if (isset($_SESSION['uPic'])) {
+              $path = USERS_IMG_PATH . $_SESSION['uPic'];
+            }
+          echo <<<data
               <div class="btn-group">
                 <button type="button" class="btn btn-outline-dark shadow-none dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
-                  <img src="$path$_SESSION[uPic]" style="width: 25px; height: 25px;" class="me-1 rounded-circle">
+                  <img src="$path"; style="width: 25px; height: 25px; object-fit:cover;" class="me-1 rounded-circle">
                   $_SESSION[uName]
                 </button>
                 <ul class="dropdown-menu dropdown-menu-lg-end">
@@ -40,10 +44,8 @@
                 </ul>
               </div>
             data;
-          }
-          else
-          {
-            echo<<<data
+        } else {
+          echo <<<data
               <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
                 Login
               </button>
@@ -51,7 +53,7 @@
                 Register
               </button>
             data;
-          }
+        }
         ?>
       </div>
     </div>
@@ -62,28 +64,52 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <form id="login-form">
-      <div class="modal-header">
-        <h5 class="modal-title d-flex align-items-center">
-          <i class="bi bi-person-circle fs-3 me-2"></i> User Login
-        </h5>
-        <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label class="form-label">Email / Mobile</label>
-          <input type="text" placeholder="Enter Email / Mobile " name="email_mob" required class="form-control shadow-none">
+        <div class="modal-header">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="bi bi-person-circle fs-3 me-2"></i> User Login
+          </h5>
+          <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="mb-4">
-          <label class="form-label">Password</label>
-          <input type="password" placeholder="Enter Password" name="pass" required class="form-control shadow-none">
-        </div>
-        <div class="d-flex align-items-center justify-content-between mb-2">
-          <button type="submit" class="btn btn-dark shadow-none">LOGIN</button>
-          <button type="button" class="btn text-secondary text-decoration-none shadow-none p-0" data-bs-toggle="modal" data-bs-target="#forgotModal" data-bs-dismiss="modal">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Email / Mobile</label>
+            <input type="text" placeholder="Enter Email / Mobile " name="email_mob" required class="form-control shadow-none">
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Password</label>
+            <input type="password" placeholder="Enter Password" name="pass" required class="form-control shadow-none">
+          </div>
+          <!-- <button type="button" class="btn text-secondary text-decoration-none shadow-none p-0 mb-3" data-bs-toggle="modal" data-bs-target="#forgotModal" data-bs-dismiss="modal">
             Forgot password?
           </button>
+          <div class="d-flex align-items-center justify-content-between mb-2">
+            <button type="submit" class="btn btn-dark shadow-none">LOGIN</button>
+          </div> -->
+
+          <button type="button" class="btn text-secondary text-decoration-none shadow-none p-0 mb-3" data-bs-toggle="modal" data-bs-target="#forgotModal" data-bs-dismiss="modal">
+            Forgot password?
+          </button>
+
+          <div class="d-flex justify-content-center mb-2">
+            <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-dark btn-lg px-5" type="submit">Login</button>
+          </div>
+          <hr class="my-4">
+
+          <!-- <div class="d-flex justify-content-center text-center mt-4 mb-4 pt-1">
+            <a href="google-login.php" class="text-danger"><i class="bi bi-google fs-3"></i>Google</a>
+          </div> -->
+          <div class="d-flex justify-content-center text-center mt-4 mb-4 pt-1">
+            <a href="google-login.php" class="btn btn-outline-light border rounded-pill d-flex align-items-center justify-content-center" style="border-color: #ccc; padding: 10px 20px; width: 300px;">
+              <img src="images/about/google-login.jpeg" alt="Google Logo" style="width: 24px; height: 24px; margin-right: 10px;">
+              <span style="color: #757575;">Google</span>
+            </a>
+          </div>
+
+          <div class="text-center mt-3">
+            <span class="d-inline">Don't have an account? <p class="d-inline text-primary" style="font-weight: 600;" data-bs-target="#registerModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign Up</p></span>
+          </div>
+
         </div>
-      </div>
       </form>
     </div>
   </div>
@@ -93,63 +119,68 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <form id="register-form">
-      <div class="modal-header">
-        <h5 class="modal-title d-flex align-items-center">
-          <i class="bi bi-person-lines-fill fs-3 me-2"></i> User Registration
-        </h5>
-        <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
-          Note: Your details must match with your ID (Identification card, passport, driving license, etc.)
-          that will be require during check-in.
-        </span>
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Name</label>
-              <input name="name" type="text" class="form-control shadow-none" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Email</label>
-              <input name="email" type="email" class="form-control shadow-none" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Phone Number</label>
-              <input name="phonenum" type="number" class="form-control shadow-none" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Picture</label>
-              <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none" required>
-            </div>
-            <div class="col-md-12 mb-3">
-              <label class="form-label">Address</label>
-              <textarea name="address" class="form-control shadow-none" rows="1" required></textarea>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Pincode</label>
-              <input name="pincode" type="number" class="form-control shadow-none" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Date of birth</label>
-              <input name="dob" type="date" class="form-control shadow-none" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Password</label>
-              <input name="pass" type="password" class="form-control shadow-none" required>
-            </div>
-            <div class="col-md-6 mb-3">
-              <label class="form-label">Confirm Password</label>
-              <input name="cpass" type="password" class="form-control shadow-none" required>
+        <div class="modal-header">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="bi bi-person-lines-fill fs-3 me-2"></i> User Registration
+          </h5>
+          <button type="reset" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
+            Note: Your details must match with your ID (Identification card, passport, driving license, etc.)
+            that will be require during check-in.
+          </span>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Name<span class="text-danger"> *</span></label>
+                <input name="name" type="text" class="form-control shadow-none" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Email<span class="text-danger"> *</span></label>
+                <input name="email" type="email" class="form-control shadow-none" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Phone Number<span class="text-danger"> *</span></label>
+                <input name="phonenum" type="number" class="form-control shadow-none" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Picture<span class="text-danger"> *</span></label>
+                <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none" required>
+              </div>
+              <div class="col-md-12 mb-3">
+                <label class="form-label">Address<span class="text-danger"> *</span></label>
+                <textarea name="address" class="form-control shadow-none" rows="1" required></textarea>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Pincode<span class="text-danger"> *</span></label>
+                <input name="pincode" type="number" class="form-control shadow-none" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Date of birth<span class="text-danger"> *</span></label>
+                <input name="dob" type="date" class="form-control shadow-none" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Password<span class="text-danger"> *</span></label>
+                <input name="pass" type="password" class="form-control shadow-none" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Confirm Password<span class="text-danger"> *</span></label>
+                <input name="cpass" type="password" class="form-control shadow-none" required>
+              </div>
             </div>
           </div>
+          <div class="text-center my-1">
+            <button type="submit" class="btn btn-dark shadow-none" >REGISTER</button>
+          </div>
+
+          <div class="text-center mt-3">
+            <span class="d-inline">Already have an account? <p class="d-inline text-primary" style="font-weight: 600; " data-bs-target="#loginModal" data-bs-toggle="modal" data-bs-dismiss="modal">Sign in</p></span>
+          </div>
+
+
         </div>
-        <div class="text-center my-1">
-          <button type="submit" class="btn btn-dark shadow-none">REGISTER</button>
-        </div>
-      
-      </div>
-     
+
       </form>
     </div>
   </div>
@@ -159,27 +190,30 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <form id="forgot-form">
-      <div class="modal-header">
-        <h5 class="modal-title d-flex align-items-center">
-          <i class="bi bi-person-circle fs-3 me-2"></i> Forgot Password
-        </h5>
-      </div>
-      <div class="modal-body">
-        <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
-          Note: A link will be sent to your email to reset your password!
-        </span>
-        <div class="mb-4">
-          <label class="form-label">Email</label>
-          <input type="email" name="email" required class="form-control shadow-none">
+        <div class="modal-header">
+          <h5 class="modal-title d-flex align-items-center">
+            <i class="bi bi-person-circle fs-3 me-2"></i> Forgot Password
+          </h5>
         </div>
-        <div class="mb-2 text-end">
-          <button type="button" class="btn shadow-none p-0 me-2" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">
-            CANCEL
-          </button>
-          <button type="submit" class="btn btn-dark shadow-none">SEND LINK</button>
+        <div class="modal-body">
+          <span class="badge rounded-pill bg-light text-dark mb-3 text-wrap lh-base">
+            Note: A link will be sent to your email to reset your password!
+          </span>
+          <div class="mb-4">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" required class="form-control shadow-none">
+          </div>
+          <div class="mb-2 text-end">
+            <button type="button" class="btn shadow-none p-0 me-2" data-bs-toggle="modal" data-bs-target="#loginModal" data-bs-dismiss="modal">
+              CANCEL
+            </button>
+            <button type="submit" class="btn btn-dark shadow-none">SEND LINK</button>
+          </div>
         </div>
-      </div>
       </form>
     </div>
   </div>
 </div>
+<script>
+ 
+</script>

@@ -104,7 +104,9 @@
 
       var myModal = document.getElementById('registerModal');
       var modal = bootstrap.Modal.getInstance(myModal);
-      modal.hide();
+      
+      var loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      
 
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "ajax/login_register.php",true);
@@ -134,6 +136,9 @@
         else{
           alert('success',"Registration successful. Confirmation link sent to email!");
           register_form.reset();
+          login_form.reset();
+          modal.hide();
+          loginModal.show();
         }
       }
     xhr.send(data);
@@ -150,10 +155,6 @@
       data.append('email_mob', login_form.elements['email_mob'].value);
       data.append('pass', login_form.elements['pass'].value);
       data.append('login','');
-
-      var myModal = document.getElementById('loginModal');
-      var modal = bootstrap.Modal.getInstance(myModal);
-      modal.hide();
 
       let xhr = new XMLHttpRequest();
       xhr.open("POST", "ajax/login_register.php",true);

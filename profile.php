@@ -44,7 +44,6 @@
         </div>
       </div>
 
-
       <div class="col-12 mb-5 px-4">
         <div class="bg-white p-3 p-md-4 rounded shadow-sm">
           <form id="info-form">
@@ -80,9 +79,27 @@
         <div class="bg-white p-3 p-md-4 rounded shadow-sm">
           <form id="profile-form">
             <h5 class="mb-3 fw-bold">Picture</h5>
-            <img src="<?php echo USERS_IMG_PATH . $u_fetch['profile'] ?>" class="rounded-circle img-fluid mb-3">
-
-            <label class="form-label">New Picture</label>
+            <div style="position: relative; width: 100%; padding-top: 100%;">
+              <div style="
+              position:absolute;
+              top: 0;
+              left: 0;
+              bottom: 0;
+              right: 0;
+              width: 100%;
+              height: auto; 
+              background-size: cover;
+              border-radius: 100%;   
+              background-position: center;
+              background-image: url('<?php $path = USERS_IMG_PATH . 'IMG_user.png';
+                                      if (isset($u_fetch['profile'])) {
+                                        $path = USERS_IMG_PATH . $u_fetch['profile'];
+                                      }
+                                      echo $path; ?>');
+                                      ">
+              </div>
+            </div>
+            <label class="form-label mt-3">New Picture</label>
             <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="mb-4 form-control shadow-none" required>
 
             <button type="submit" class="btn text-white custom-bg shadow-none">Save Changes</button>
@@ -136,11 +153,9 @@
       xhr.onload = function() {
         if (this.responseText == 'phone_already') {
           alert('error', "Phone number is already registered!");
-        } 
-        else if (this.responseText == 0) {
+        } else if (this.responseText == 0) {
           alert('error', "No Changes Made!");
-        } 
-        else {
+        } else {
           alert('success', "Changes Saved!");
         }
       }
@@ -164,14 +179,11 @@
       xhr.onload = function() {
         if (this.responseText == 'inv_img') {
           alert('error', "Only JPG, WEBP & PNG images are allowed!");
-        } 
-        else if (this.responseText == 'upd_failed') {
+        } else if (this.responseText == 'upd_failed') {
           alert('error', "Image upload failed!");
-        } 
-        else if (this.responseText == 0) {
+        } else if (this.responseText == 0) {
           alert('error', "Updation failed!");
-        } 
-        else {
+        } else {
           window.location.href = window.location.pathname;
         }
       }
@@ -188,7 +200,7 @@
       let new_pass = pass_form.elements['new_pass'].value;
       let confirm_pass = pass_form.elements['confirm_pass'].value;
 
-      if(new_pass!=confirm_pass){
+      if (new_pass != confirm_pass) {
         alert('error', "Password do not match!");
         return false;
       }
@@ -205,11 +217,9 @@
       xhr.onload = function() {
         if (this.responseText == 'mismatch') {
           alert('error', "Password do not match!");
-        }  
-        else if (this.responseText == 0) {
+        } else if (this.responseText == 0) {
           alert('error', "Updation failed!");
-        } 
-        else {
+        } else {
           alert('success', 'Changes saved!');
           pass_form.reset();
         }
@@ -218,9 +228,7 @@
       xhr.send(data);
 
     });
-
   </script>
-
 </body>
 
 </html>

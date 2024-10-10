@@ -93,7 +93,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
                             <th scope="col" width="20%">Subject</th>
-                            <th scope="col" width="30%">Message</th>
+                            <th scope="col" width="20%">Message</th>
                             <th scope="col">Date</th>
                             <th scope="col">Action</th>
                             </tr>
